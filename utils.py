@@ -1,4 +1,16 @@
 import numpy as np
+import argparse
+import yaml
+
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=str, default=None, help="path to config file")
+    parser.add_argument("--search_mode", type=str, default="all", help="choose from learning_rate, reg_strength and hidden_size")
+    args = parser.parse_args()
+    config = yaml.safe_load(open(args.config)) if args.config is not None else {}
+    parser.set_defaults(**config)
+    args = parser.parse_args()
+    return args
 
 class ThreeLayerNet:
     def __init__(self, input_size, hidden_size_1, hidden_size_2, output_size, activation='relu'):

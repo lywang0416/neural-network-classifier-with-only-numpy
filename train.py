@@ -2,7 +2,7 @@ from utils import *
 
 def train(model, X_train, y_train, X_val, y_val, optimizer, 
           batch_size=128, num_epochs=10, reg_strength=0.001,
-          lr_decay=0.95, lr_decay_every=1, save_path='best_model.npz'):
+          lr_decay=0.95, lr_decay_every=1, save_path=None):
     
     # Keep track of the best validation accuracy and corresponding model
     best_val_acc = 0.0
@@ -75,9 +75,9 @@ def train(model, X_train, y_train, X_val, y_val, optimizer,
         print(f"Epoch {epoch+1}/{num_epochs} - Train Loss: {avg_train_loss:.4f}, Val Loss: {val_loss:.4f}, Val Acc: {val_acc:.4f}")
         
         # Save the best model
-        if val_acc > best_val_acc:
+        if save_path and val_acc > best_val_acc:
             best_val_acc = val_acc
             model.save(save_path)
-            print(f"New best model saved with validation accuracy: {best_val_acc:.4f}")
+            print(f"New best model saved as {save_path} and with validation accuracy: {best_val_acc:.4f}")
     
     return train_losses, val_losses, val_accs
